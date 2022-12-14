@@ -360,8 +360,9 @@ func (h *handlerEvent) GetEventByToday(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(timeNow.Unix())
 		fmt.Println(timeNowLocalClient.Unix())
 		fmt.Println(fStart.Unix())
+		fmt.Println(tomorrow00_00.Unix())
 
-		if (timeNow.Unix() <= fStart.Unix()) && (fStart.Unix() <= tomorrow00_00.Unix()) {
+		if (timeNowLocalClient.Unix() <= fStart.Unix()) && (fStart.Unix() <= tomorrow00_00.Unix()) {
 			dataEvents = append(dataEvents, dataGet)
 		}
 	}
