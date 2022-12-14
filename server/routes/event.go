@@ -5,7 +5,6 @@ import (
 	"Server/pkg/middleware"
 	"Server/pkg/mysql"
 	"Server/repositories"
-	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -24,11 +23,11 @@ func EventRoutes(r *mux.Router) {
 	r.HandleFunc("/search-events", h.SearchEvent).Methods("GET")
 }
 
-func setInterval() {
-	eventRepository := repositories.RepositoryEvent(mysql.DB)
-	h := handlers.HandlerEvent(eventRepository)
+// func setInterval() {
+// 	eventRepository := repositories.RepositoryEvent(mysql.DB)
+// 	h := handlers.HandlerEvent(eventRepository)
 
-	for range time.Tick(20 * time.Second) {
-		h.UpdateProgressEvent()
-	}
-}
+// 	for range time.Tick(20 * time.Second) {
+// 		h.UpdateProgressEvent()
+// 	}
+// }

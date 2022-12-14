@@ -323,8 +323,8 @@ func (h *handlerEvent) GetEventByToday(w http.ResponseWriter, r *http.Request) {
 			Title:       ev.Title,
 			Category:    ev.Category,
 			Image:       ev.Image,
-			StartDate:   fStart.Format(time.RFC1123),
-			EndDate:     fEnd.Format(time.RFC1123),
+			StartDate:   fStart.Local().Format(time.RFC1123),
+			EndDate:     fEnd.Local().Format(time.RFC1123),
 			Price:       ev.Price,
 			Address:     ev.Address,
 			UrlMap:      ev.UrlMap,
@@ -443,48 +443,48 @@ func (h *handlerEvent) SearchEvent(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 }
 
-func (h *handlerEvent) UpdateProgressEvent() {
+// func (h *handlerEvent) UpdateProgressEvent() {
 
-	const longFormat = "Mon, 02 Jan 2006 15:04:00 MST"
+// 	const longFormat = "Mon, 02 Jan 2006 15:04:00 MST"
 
-	timeNow := time.Now().UTC()
+// 	timeNow := time.Now().UTC()
 
-	events, _ := h.EventRepository.GetEventByProgress()
+// 	events, _ := h.EventRepository.GetEventByProgress()
 
-	for _, ev := range events {
+// 	for _, ev := range events {
 
-		fStart, _ := time.Parse(longFormat, ev.StartDate)
-		fEnd, _ := time.Parse(longFormat, ev.EndDate)
+// 		fStart, _ := time.Parse(longFormat, ev.StartDate)
+// 		fEnd, _ := time.Parse(longFormat, ev.EndDate)
 
-		dataGet := models.Event{
-			ID:          ev.ID,
-			Title:       ev.Title,
-			Category:    ev.Category,
-			Image:       ev.Image,
-			StartDate:   fStart.Format(time.RFC1123),
-			EndDate:     fEnd.Format(time.RFC1123),
-			Price:       ev.Price,
-			Address:     ev.Address,
-			UrlMap:      ev.UrlMap,
-			Phone:       ev.Phone,
-			Email:       ev.Email,
-			Description: ev.Description,
-			MerchantID:  ev.MerchantID,
-			Merchant:    ev.Merchant,
-		}
+// 		dataGet := models.Event{
+// 			ID:          ev.ID,
+// 			Title:       ev.Title,
+// 			Category:    ev.Category,
+// 			Image:       ev.Image,
+// 			StartDate:   fStart.Local().Format(time.RFC1123),
+// 			EndDate:     fEnd.Local().Format(time.RFC1123),
+// 			Price:       ev.Price,
+// 			Address:     ev.Address,
+// 			UrlMap:      ev.UrlMap,
+// 			Phone:       ev.Phone,
+// 			Email:       ev.Email,
+// 			Description: ev.Description,
+// 			MerchantID:  ev.MerchantID,
+// 			Merchant:    ev.Merchant,
+// 		}
 
-		if timeNow.Unix() >= fEnd.Unix() {
-			dataGet.Progress = "Event is over"
-		}
-		if timeNow.Unix() >= fEnd.Unix() {
-			h.EventRepository.UpdateProgressEvent(dataGet)
-		}
+// 		if timeNow.Unix() >= fEnd.Unix() {
+// 			dataGet.Progress = "Event is over"
+// 		}
+// 		if timeNow.Unix() >= fEnd.Unix() {
+// 			h.EventRepository.UpdateProgressEvent(dataGet)
+// 		}
 
-		if timeNow.Unix() <= fEnd.Unix() && timeNow.Unix() >= fStart.Unix() {
-			dataGet.Progress = "Event in progress"
-		}
-		if timeNow.Unix() <= fEnd.Unix() && timeNow.Unix() >= fStart.Unix() {
-			h.EventRepository.UpdateProgressEvent(dataGet)
-		}
-	}
-}
+// 		if timeNow.Unix() <= fEnd.Unix() && timeNow.Unix() >= fStart.Unix() {
+// 			dataGet.Progress = "Event in progress"
+// 		}
+// 		if timeNow.Unix() <= fEnd.Unix() && timeNow.Unix() >= fStart.Unix() {
+// 			h.EventRepository.UpdateProgressEvent(dataGet)
+// 		}
+// 	}
+// }
