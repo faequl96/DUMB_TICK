@@ -328,14 +328,14 @@ func (h *handlerEvent) GetEventByToday(w http.ResponseWriter, r *http.Request) {
 		// tomorrowWithHour := tomorrowNoHour + " 00:00:00 " + splitedTimeLocal
 		// tomorrow00_00, _ := time.Parse(localFormat, tomorrowWithHour)
 
-		fmt.Println(clientToInt)
-		fmt.Println(clientInt)
-		fmt.Println(timeNow)
-		fmt.Println(timeNowLocalClient)
-		fmt.Println(timeNowPlus24)
-		fmt.Println(tomorrowNoHour)
-		fmt.Println(tomorrowWithHour)
-		fmt.Println(tomorrow00_00)
+		// fmt.Println(clientToInt)
+		// fmt.Println(clientInt)
+		// fmt.Println(timeNow)
+		// fmt.Println(timeNowLocalClient)
+		// fmt.Println(timeNowPlus24)
+		// fmt.Println(tomorrowNoHour)
+		// fmt.Println(tomorrowWithHour)
+		// fmt.Println(tomorrow00_00)
 
 		fStart, _ := time.Parse(localFormat, ev.StartDate)
 		fEnd, _ := time.Parse(localFormat, ev.EndDate)
@@ -356,6 +356,10 @@ func (h *handlerEvent) GetEventByToday(w http.ResponseWriter, r *http.Request) {
 			Progress:    ev.Progress,
 			MerchantID:  ev.MerchantID,
 		}
+
+		fmt.Println(timeNow.Unix())
+		fmt.Println(timeNowLocalClient.Unix())
+		fmt.Println(fStart.Unix())
 
 		if (timeNow.Unix() <= fStart.Unix()) && (fStart.Unix() <= tomorrow00_00.Unix()) {
 			dataEvents = append(dataEvents, dataGet)
