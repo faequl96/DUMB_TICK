@@ -304,26 +304,38 @@ func (h *handlerEvent) GetEventByToday(w http.ResponseWriter, r *http.Request) {
 	var dataEvents []models.Event
 	for _, ev := range events {
 
-		timeLocalFormat := ev.StartDate
-		splitTimeLocal := strings.Split(timeLocalFormat, " ")
-		splitedTimeLocal := splitTimeLocal[5]
+		splitLocalClientFormat := strings.Split(ev.StartDate, " ")
+		splitedLocalClient := splitLocalClientFormat[5]
+		localClientToInt := strings.Split(splitedLocalClient, "")
+		clientToInt := localClientToInt[2]
+		clientInt, _ := strconv.Atoi(clientToInt)
 
 		timeNow := time.Now()
-		loc, _ := time.LoadLocation("Asia/Jakarta")
-		shortForm := "02-01-2006 15:04"
-		timeNowFormat := timeNow.Format(shortForm)
-		timeNowLocal, _ := time.ParseInLocation(shortForm, timeNowFormat, loc)
-		// timeNowLocalParse := time.Parse(localFormat, timeNowLocal)
-		timeNowPlus24 := timeNowLocal.Add(24 * time.Hour)
+		timeNowLocalClient := timeNow.Add(time.Duration(clientInt) * time.Hour)
+		timeNowPlus24 := timeNowLocalClient.Add(24 * time.Hour)
 		tomorrowNoHour := timeNowPlus24.Format("Mon, 02 Jan 2006")
-		tomorrowWithHour := tomorrowNoHour + " 00:00:00 " + splitedTimeLocal
+		tomorrowWithHour := tomorrowNoHour + " 00:00:00 " + splitedLocalClient
 		tomorrow00_00, _ := time.Parse(localFormat, tomorrowWithHour)
 
+		// timeNow := time.Now()
+		// loc, _ := time.LoadLocation("Asia/Jakarta")
+		// shortForm := "02-01-2006 15:04"
+		// timeNowFormat := timeNow.Format(shortForm)
+		// timeNowLocal, _ := time.ParseInLocation(shortForm, timeNowFormat, loc)
+		// // timeNowLocalParse := time.Parse(localFormat, timeNowLocal)
+		// timeNowPlus24 := timeNowLocal.Add(24 * time.Hour)
+		// tomorrowNoHour := timeNowPlus24.Format("Mon, 02 Jan 2006")
+		// tomorrowWithHour := tomorrowNoHour + " 00:00:00 " + splitedTimeLocal
+		// tomorrow00_00, _ := time.Parse(localFormat, tomorrowWithHour)
+
+		fmt.Println(clientToInt)
+		fmt.Println(clientInt)
 		fmt.Println(timeNow)
-		fmt.Println(timeNowFormat)
-		fmt.Println(timeNowLocal)
+		fmt.Println(timeNowLocalClient)
 		fmt.Println(timeNowPlus24)
+		fmt.Println(tomorrowNoHour)
 		fmt.Println(tomorrowWithHour)
+		fmt.Println(tomorrow00_00)
 
 		fStart, _ := time.Parse(localFormat, ev.StartDate)
 		fEnd, _ := time.Parse(localFormat, ev.EndDate)
