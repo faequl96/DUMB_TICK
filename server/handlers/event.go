@@ -70,8 +70,8 @@ func (h *handlerEvent) GetEventById(w http.ResponseWriter, r *http.Request) {
 		Title:       event.Title,
 		Category:    event.Category,
 		Image:       event.Image,
-		StartDate:   fStart.Local().Format(time.RFC1123),
-		EndDate:     fEnd.Local().Format(time.RFC1123),
+		StartDate:   fStart.Format(time.RFC1123),
+		EndDate:     fEnd.Format(time.RFC1123),
 		Price:       event.Price,
 		Address:     event.Address,
 		UrlMap:      event.UrlMap,
@@ -157,93 +157,93 @@ func (h *handlerEvent) CreateEvent(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (h *handlerEvent) UpdateEvent(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
+// func (h *handlerEvent) UpdateEvent(w http.ResponseWriter, r *http.Request) {
+// 	w.Header().Set("Content-Type", "application/json")
 
-	id, _ := strconv.Atoi(mux.Vars(r)["id"])
+// 	id, _ := strconv.Atoi(mux.Vars(r)["id"])
 
-	dataContex := r.Context().Value("dataFile")
-	filepath := dataContex.(string)
+// 	dataContex := r.Context().Value("dataFile")
+// 	filepath := dataContex.(string)
 
-	var ctx = context.Background()
-	var CLOUD_NAME = os.Getenv("CLOUD_NAME")
-	var API_KEY = os.Getenv("API_KEY")
-	var API_SECRET = os.Getenv("API_SECRET")
+// 	var ctx = context.Background()
+// 	var CLOUD_NAME = os.Getenv("CLOUD_NAME")
+// 	var API_KEY = os.Getenv("API_KEY")
+// 	var API_SECRET = os.Getenv("API_SECRET")
 
-	price, _ := strconv.Atoi(r.FormValue("price"))
+// 	price, _ := strconv.Atoi(r.FormValue("price"))
 
-	request := eventdto.EventRequest{
-		Title:       r.FormValue("title"),
-		Category:    r.FormValue("category"),
-		Price:       price,
-		Address:     r.FormValue("address"),
-		UrlMap:      r.FormValue("urlMap"),
-		Phone:       r.FormValue("phone"),
-		Email:       r.FormValue("email"),
-		Description: r.FormValue("description"),
-	}
+// 	request := eventdto.EventRequest{
+// 		Title:       r.FormValue("title"),
+// 		Category:    r.FormValue("category"),
+// 		Price:       price,
+// 		Address:     r.FormValue("address"),
+// 		UrlMap:      r.FormValue("urlMap"),
+// 		Phone:       r.FormValue("phone"),
+// 		Email:       r.FormValue("email"),
+// 		Description: r.FormValue("description"),
+// 	}
 
-	event, err := h.EventRepository.GetEventById(int(id))
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		response := dto.ErrorResult{Code: http.StatusBadRequest, Status: "failed", Message: err.Error()}
-		json.NewEncoder(w).Encode(response)
-		return
-	}
+// 	event, err := h.EventRepository.GetEventById(int(id))
+// 	if err != nil {
+// 		w.WriteHeader(http.StatusBadRequest)
+// 		response := dto.ErrorResult{Code: http.StatusBadRequest, Status: "failed", Message: err.Error()}
+// 		json.NewEncoder(w).Encode(response)
+// 		return
+// 	}
 
-	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
+// 	cld, _ := cloudinary.NewFromParams(CLOUD_NAME, API_KEY, API_SECRET)
 
-	resp, err := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "Buckbug"})
+// 	resp, err := cld.Upload.Upload(ctx, filepath, uploader.UploadParams{Folder: "uploads"})
 
-	if request.Title != "" {
-		event.Title = request.Title
-	}
+// 	if request.Title != "" {
+// 		event.Title = request.Title
+// 	}
 
-	if request.Category != "" {
-		event.Category = request.Category
-	}
+// 	if request.Category != "" {
+// 		event.Category = request.Category
+// 	}
 
-	if filepath != "false" {
-		event.Image = resp.SecureURL
-	}
+// 	if filepath != "false" {
+// 		event.Image = resp.SecureURL
+// 	}
 
-	if r.FormValue("price") != "" {
-		event.Price = request.Price
-	}
+// 	if r.FormValue("price") != "" {
+// 		event.Price = request.Price
+// 	}
 
-	if request.Address != "" {
-		event.Address = request.Address
-	}
+// 	if request.Address != "" {
+// 		event.Address = request.Address
+// 	}
 
-	if request.UrlMap != "" {
-		event.UrlMap = request.UrlMap
-	}
+// 	if request.UrlMap != "" {
+// 		event.UrlMap = request.UrlMap
+// 	}
 
-	if request.Phone != "" {
-		event.Phone = request.Phone
-	}
+// 	if request.Phone != "" {
+// 		event.Phone = request.Phone
+// 	}
 
-	if request.Email != "" {
-		event.Email = request.Email
-	}
+// 	if request.Email != "" {
+// 		event.Email = request.Email
+// 	}
 
-	if request.Description != "" {
-		event.Description = request.Description
-	}
+// 	if request.Description != "" {
+// 		event.Description = request.Description
+// 	}
 
-	data, err := h.EventRepository.UpdateEvent(event)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		response := dto.ErrorResult{Code: http.StatusInternalServerError, Status: "failed", Message: err.Error()}
-		json.NewEncoder(w).Encode(response)
-		return
-	}
+// 	data, err := h.EventRepository.UpdateEvent(event)
+// 	if err != nil {
+// 		w.WriteHeader(http.StatusInternalServerError)
+// 		response := dto.ErrorResult{Code: http.StatusInternalServerError, Status: "failed", Message: err.Error()}
+// 		json.NewEncoder(w).Encode(response)
+// 		return
+// 	}
 
-	w.WriteHeader(http.StatusOK)
-	response := dto.SuccessResult{Code: http.StatusOK, Status: "success", Data: data}
-	json.NewEncoder(w).Encode(response)
+// 	w.WriteHeader(http.StatusOK)
+// 	response := dto.SuccessResult{Code: http.StatusOK, Status: "success", Data: data}
+// 	json.NewEncoder(w).Encode(response)
 
-}
+// }
 
 func (h *handlerEvent) GetEventByCat(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
@@ -270,8 +270,8 @@ func (h *handlerEvent) GetEventByCat(w http.ResponseWriter, r *http.Request) {
 			Title:       ev.Title,
 			Category:    ev.Category,
 			Image:       ev.Image,
-			StartDate:   fStart.Local().Format(time.RFC1123),
-			EndDate:     fEnd.Local().Format(time.RFC1123),
+			StartDate:   fStart.Format(time.RFC1123),
+			EndDate:     fEnd.Format(time.RFC1123),
 			Price:       ev.Price,
 			Address:     ev.Address,
 			UrlMap:      ev.UrlMap,
@@ -317,26 +317,6 @@ func (h *handlerEvent) GetEventByToday(w http.ResponseWriter, r *http.Request) {
 		tomorrowWithHour := tomorrowNoHour + " 00:00:00 " + splitedLocalClient
 		tomorrow00_00, _ := time.Parse(localFormat, tomorrowWithHour)
 
-		// timeNow := time.Now()
-		// loc, _ := time.LoadLocation("Asia/Jakarta")
-		// shortForm := "02-01-2006 15:04"
-		// timeNowFormat := timeNow.Format(shortForm)
-		// timeNowLocal, _ := time.ParseInLocation(shortForm, timeNowFormat, loc)
-		// // timeNowLocalParse := time.Parse(localFormat, timeNowLocal)
-		// timeNowPlus24 := timeNowLocal.Add(24 * time.Hour)
-		// tomorrowNoHour := timeNowPlus24.Format("Mon, 02 Jan 2006")
-		// tomorrowWithHour := tomorrowNoHour + " 00:00:00 " + splitedTimeLocal
-		// tomorrow00_00, _ := time.Parse(localFormat, tomorrowWithHour)
-
-		// fmt.Println(clientToInt)
-		// fmt.Println(clientInt)
-		// fmt.Println(timeNow)
-		// fmt.Println(timeNowLocalClient)
-		// fmt.Println(timeNowPlus24)
-		// fmt.Println(tomorrowNoHour)
-		// fmt.Println(tomorrowWithHour)
-		// fmt.Println(tomorrow00_00)
-
 		fStart, _ := time.Parse(localFormat, ev.StartDate)
 		fEnd, _ := time.Parse(localFormat, ev.EndDate)
 
@@ -345,8 +325,8 @@ func (h *handlerEvent) GetEventByToday(w http.ResponseWriter, r *http.Request) {
 			Title:       ev.Title,
 			Category:    ev.Category,
 			Image:       ev.Image,
-			StartDate:   fStart.Local().Format(time.RFC1123),
-			EndDate:     fEnd.Local().Format(time.RFC1123),
+			StartDate:   fStart.Format(time.RFC1123),
+			EndDate:     fEnd.Format(time.RFC1123),
 			Price:       ev.Price,
 			Address:     ev.Address,
 			UrlMap:      ev.UrlMap,
@@ -356,11 +336,6 @@ func (h *handlerEvent) GetEventByToday(w http.ResponseWriter, r *http.Request) {
 			Progress:    ev.Progress,
 			MerchantID:  ev.MerchantID,
 		}
-
-		fmt.Println(timeNow.Unix())
-		fmt.Println(timeNowLocalClient.Unix())
-		fmt.Println(fStart.Unix())
-		fmt.Println(tomorrow00_00.Unix())
 
 		if (timeNowLocalClient.Unix() <= fStart.Unix()) && (fStart.Unix() <= tomorrow00_00.Unix()) {
 			dataEvents = append(dataEvents, dataGet)
@@ -386,15 +361,21 @@ func (h *handlerEvent) GetEventByUpcoming(w http.ResponseWriter, r *http.Request
 
 	const localFormat = "Mon, 02 Jan 2006 15:04:00 MST"
 
-	timeNow := time.Now()
-	timeNowLocal := timeNow.Local()
-	timeNowPlus24 := timeNowLocal.Add(24 * time.Hour)
-	tomorrowNoHour := timeNowPlus24.Format("Mon, 02 Jan 2006")
-	tomorrowWithHour := tomorrowNoHour + " 00:00:00 +07"
-	tomorrow00_00, _ := time.Parse(localFormat, tomorrowWithHour)
-
 	var dataEvents []models.Event
 	for _, ev := range events {
+
+		splitLocalClientFormat := strings.Split(ev.StartDate, " ")
+		splitedLocalClient := splitLocalClientFormat[5]
+		localClientToInt := strings.Split(splitedLocalClient, "")
+		clientToInt := localClientToInt[2]
+		clientInt, _ := strconv.Atoi(clientToInt)
+
+		timeNow := time.Now()
+		timeNowLocalClient := timeNow.Add(time.Duration(clientInt) * time.Hour)
+		timeNowPlus24 := timeNowLocalClient.Add(24 * time.Hour)
+		tomorrowNoHour := timeNowPlus24.Format("Mon, 02 Jan 2006")
+		tomorrowWithHour := tomorrowNoHour + " 00:00:00 " + splitedLocalClient
+		tomorrow00_00, _ := time.Parse(localFormat, tomorrowWithHour)
 
 		fStart, _ := time.Parse(localFormat, ev.StartDate)
 		fEnd, _ := time.Parse(localFormat, ev.EndDate)
@@ -404,8 +385,8 @@ func (h *handlerEvent) GetEventByUpcoming(w http.ResponseWriter, r *http.Request
 			Title:       ev.Title,
 			Category:    ev.Category,
 			Image:       ev.Image,
-			StartDate:   fStart.Local().Format(time.RFC1123),
-			EndDate:     fEnd.Local().Format(time.RFC1123),
+			StartDate:   fStart.Format(time.RFC1123),
+			EndDate:     fEnd.Format(time.RFC1123),
 			Price:       ev.Price,
 			Address:     ev.Address,
 			UrlMap:      ev.UrlMap,
@@ -429,8 +410,7 @@ func (h *handlerEvent) GetEventByUpcoming(w http.ResponseWriter, r *http.Request
 func (h *handlerEvent) SearchEvent(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	const longFormat = "Mon, 02 Jan 2006 15:04:00 MST"
-	const shortFormat = "2006-January-02"
+	const localFormat = "Mon, 02 Jan 2006 15:04:00 MST"
 
 	events, err := h.EventRepository.GetEventByProgress()
 	if err != nil {
@@ -443,16 +423,16 @@ func (h *handlerEvent) SearchEvent(w http.ResponseWriter, r *http.Request) {
 	var dataEvents []models.Event
 	for _, ev := range events {
 
-		fStart, _ := time.Parse(longFormat, ev.StartDate)
-		fEnd, _ := time.Parse(longFormat, ev.EndDate)
+		fStart, _ := time.Parse(localFormat, ev.StartDate)
+		fEnd, _ := time.Parse(localFormat, ev.EndDate)
 
 		dataGet := models.Event{
 			ID:          ev.ID,
 			Title:       ev.Title,
 			Category:    ev.Category,
 			Image:       ev.Image,
-			StartDate:   fStart.Local().Format(time.RFC1123),
-			EndDate:     fEnd.Local().Format(time.RFC1123),
+			StartDate:   fStart.Format(time.RFC1123),
+			EndDate:     fEnd.Format(time.RFC1123),
 			Price:       ev.Price,
 			Address:     ev.Address,
 			UrlMap:      ev.UrlMap,
@@ -470,48 +450,55 @@ func (h *handlerEvent) SearchEvent(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 }
 
-// func (h *handlerEvent) UpdateProgressEvent() {
+func (h *handlerEvent) UpdateProgressEvent() {
 
-// 	const longFormat = "Mon, 02 Jan 2006 15:04:00 MST"
+	const localFormat = "Mon, 02 Jan 2006 15:04:00 MST"
 
-// 	timeNow := time.Now().UTC()
+	events, _ := h.EventRepository.GetEventByProgress()
 
-// 	events, _ := h.EventRepository.GetEventByProgress()
+	for _, ev := range events {
 
-// 	for _, ev := range events {
+		splitLocalClientFormat := strings.Split(ev.StartDate, " ")
+		splitedLocalClient := splitLocalClientFormat[5]
+		localClientToInt := strings.Split(splitedLocalClient, "")
+		clientToInt := localClientToInt[2]
+		clientInt, _ := strconv.Atoi(clientToInt)
 
-// 		fStart, _ := time.Parse(longFormat, ev.StartDate)
-// 		fEnd, _ := time.Parse(longFormat, ev.EndDate)
+		timeNow := time.Now()
+		timeNowLocalClient := timeNow.Add(time.Duration(clientInt) * time.Hour)
 
-// 		dataGet := models.Event{
-// 			ID:          ev.ID,
-// 			Title:       ev.Title,
-// 			Category:    ev.Category,
-// 			Image:       ev.Image,
-// 			StartDate:   fStart.Local().Format(time.RFC1123),
-// 			EndDate:     fEnd.Local().Format(time.RFC1123),
-// 			Price:       ev.Price,
-// 			Address:     ev.Address,
-// 			UrlMap:      ev.UrlMap,
-// 			Phone:       ev.Phone,
-// 			Email:       ev.Email,
-// 			Description: ev.Description,
-// 			MerchantID:  ev.MerchantID,
-// 			Merchant:    ev.Merchant,
-// 		}
+		fStart, _ := time.Parse(localFormat, ev.StartDate)
+		fEnd, _ := time.Parse(localFormat, ev.EndDate)
 
-// 		if timeNow.Unix() >= fEnd.Unix() {
-// 			dataGet.Progress = "Event is over"
-// 		}
-// 		if timeNow.Unix() >= fEnd.Unix() {
-// 			h.EventRepository.UpdateProgressEvent(dataGet)
-// 		}
+		dataGet := models.Event{
+			ID:          ev.ID,
+			Title:       ev.Title,
+			Category:    ev.Category,
+			Image:       ev.Image,
+			StartDate:   fStart.Format(time.RFC1123),
+			EndDate:     fEnd.Format(time.RFC1123),
+			Price:       ev.Price,
+			Address:     ev.Address,
+			UrlMap:      ev.UrlMap,
+			Phone:       ev.Phone,
+			Email:       ev.Email,
+			Description: ev.Description,
+			MerchantID:  ev.MerchantID,
+			Merchant:    ev.Merchant,
+		}
 
-// 		if timeNow.Unix() <= fEnd.Unix() && timeNow.Unix() >= fStart.Unix() {
-// 			dataGet.Progress = "Event in progress"
-// 		}
-// 		if timeNow.Unix() <= fEnd.Unix() && timeNow.Unix() >= fStart.Unix() {
-// 			h.EventRepository.UpdateProgressEvent(dataGet)
-// 		}
-// 	}
-// }
+		if timeNowLocalClient.Unix() >= fEnd.Unix() {
+			dataGet.Progress = "Event is over"
+		}
+		if timeNowLocalClient.Unix() >= fEnd.Unix() {
+			h.EventRepository.UpdateProgressEvent(dataGet)
+		}
+
+		if timeNowLocalClient.Unix() <= fEnd.Unix() && timeNowLocalClient.Unix() >= fStart.Unix() {
+			dataGet.Progress = "Event in progress"
+		}
+		if timeNowLocalClient.Unix() <= fEnd.Unix() && timeNowLocalClient.Unix() >= fStart.Unix() {
+			h.EventRepository.UpdateProgressEvent(dataGet)
+		}
+	}
+}

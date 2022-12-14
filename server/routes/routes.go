@@ -10,5 +10,5 @@ func RouteInit(r *mux.Router) {
 	EventRoutes(r)
 	PaymentRoutes(r)
 
-	// go setInterval()
+	go setInterval()
 }

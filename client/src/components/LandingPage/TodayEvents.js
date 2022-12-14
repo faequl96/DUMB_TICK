@@ -82,9 +82,9 @@ const TodayEvent = () => {
          ) : (
             <>
                {events?.map((item, index) => (
-                  <>
+                  <div key={index}>
                      {item.merchant_id !== state.user.id && (
-                        <div key={index} className='col-4 p-4'>
+                        <div className='col-4 p-4'>
                            <Card 
                               className='position-relative border-0 py-0 bg-light rounded-0' 
                               style={{ width: '100%', backgroundColor : '#f4dcdc', borderColor: '#acacac', boxShadow: "0 2px 4px rgba(0, 0, 0, .3)" }}
@@ -140,7 +140,7 @@ const TodayEvent = () => {
                            </Card>
                         </div>
                      )}
-                  </>
+                  </div>
                ))}
             </>
          )}
