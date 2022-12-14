@@ -28,8 +28,7 @@ func setInterval() {
 	eventRepository := repositories.RepositoryEvent(mysql.DB)
 	h := handlers.HandlerEvent(eventRepository)
 
-	ticker := time.Tick(2 * time.Second)
-	for _ = range ticker {
+	for range time.Tick(20 * time.Second) {
 		h.UpdateProgressEvent()
 	}
 }

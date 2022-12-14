@@ -41,6 +41,8 @@ const DetailEvent = () => {
             qty: qty,
             price: event.price * qty
          });
+
+         console.log("tes");
          await API.post("/add-payment", body, config);
    
          setQty(1)

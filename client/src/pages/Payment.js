@@ -22,6 +22,7 @@ const Payment = () => {
          // e.preventDefault();
 
          const resMidtrans = await API.patch(`/checkout/${transID}`);
+         console.log(resMidtrans);
          const token = resMidtrans.data.data.token;
 
          window.snap.pay(token, {
