@@ -133,7 +133,7 @@ const TodayEvent = () => {
                                        </>
                                     )}
                                  </div>
-                                 <p className='fs-5 fw-bold mb-1' style={{color: "#ff5555"}}>{item.start_date.slice(0, 22)}</p>
+                                 <p className='fs-5 fw-bold mb-1' style={{color: "#ff5555"}}>date </p>
                                  <p className='fs-6 text-muted mb-0' style={{lineHeight: "1.2rem"}}>{item.description}</p>
                                  <p className='fs-6 text-muted' style={{lineHeight: "1.2rem", textAlign: "justify"}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor...</p>
                               </Card.Body>

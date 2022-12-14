@@ -206,8 +206,8 @@ export const AppContextProvider = ({children}) => {
 			const formData = new FormData();
          formData.set("title", eventData.title);
          formData.set("category", eventData.category);
-         formData.set('start_date', new Date(eventData.start_date.replace('T',' ').replace('-','/')).toUTCString());
-         formData.set('end_date', new Date(eventData.end_date.replace('T',' ').replace('-','/')).toUTCString());
+         formData.set('start_date', new Date(eventData.start_date.replace('T',' ').replace('-','/')));
+         formData.set('end_date', new Date(eventData.end_date.replace('T',' ').replace('-','/')));
          formData.set("price", eventData.price);
          formData.set("address", eventData.address);
          formData.set("url_map", eventData.url_map);
