@@ -206,8 +206,15 @@ export const AppContextProvider = ({children}) => {
 			const formData = new FormData();
          formData.set("title", eventData.title);
          formData.set("category", eventData.category);
-         formData.set('start_date', new Date(eventData.start_date.replace('T',' ').replace('-','/')));
-         formData.set('end_date', new Date(eventData.end_date.replace('T',' ').replace('-','/')));
+
+         let startDateWIB = new Date(eventData.start_date.replace('T',' ').replace('-','/'));
+         const startDate = startDateWIB.toString().slice(0, 3) + ", " + startDateWIB.toString().slice(8, 10) + startDateWIB.toString().slice(3, 7) + startDateWIB.toString().slice(10, 25) + startDateWIB.toString().slice(28, 31);
+         formData.set('start_date', startDate);
+
+         let endDateWIB = new Date(eventData.end_date.replace('T',' ').replace('-','/'));
+         const endDate = endDateWIB.toString().slice(0, 3) + ", " + endDateWIB.toString().slice(8, 10) + endDateWIB.toString().slice(3, 7) + endDateWIB.toString().slice(10, 25) + endDateWIB.toString().slice(28, 31);
+         formData.set('end_date', endDate);
+
          formData.set("price", eventData.price);
          formData.set("address", eventData.address);
          formData.set("url_map", eventData.url_map);

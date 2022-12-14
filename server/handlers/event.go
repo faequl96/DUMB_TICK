@@ -309,11 +309,21 @@ func (h *handlerEvent) GetEventByToday(w http.ResponseWriter, r *http.Request) {
 		splitedTimeLocal := splitTimeLocal[5]
 
 		timeNow := time.Now()
-		timeNowLocal := timeNow.Local()
+		loc, _ := time.LoadLocation("Asia/Jakarta")
+		shortForm := "02-01-2006 15:04"
+		timeNowFormat := timeNow.Format(shortForm)
+		timeNowLocal, _ := time.ParseInLocation(shortForm, timeNowFormat, loc)
+		// timeNowLocalParse := time.Parse(localFormat, timeNowLocal)
 		timeNowPlus24 := timeNowLocal.Add(24 * time.Hour)
 		tomorrowNoHour := timeNowPlus24.Format("Mon, 02 Jan 2006")
 		tomorrowWithHour := tomorrowNoHour + " 00:00:00 " + splitedTimeLocal
 		tomorrow00_00, _ := time.Parse(localFormat, tomorrowWithHour)
+
+		fmt.Println(timeNow)
+		fmt.Println(timeNowFormat)
+		fmt.Println(timeNowLocal)
+		fmt.Println(timeNowPlus24)
+		fmt.Println(tomorrowWithHour)
 
 		fStart, _ := time.Parse(localFormat, ev.StartDate)
 		fEnd, _ := time.Parse(localFormat, ev.EndDate)
