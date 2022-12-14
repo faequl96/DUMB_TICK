@@ -1,0 +1,19 @@
+#searchField input:focus{
+    box-shadow: none;
+}
+
+#eventField input:focus, #eventField select:focus{
+    box-shadow: none;
+}
+
+#regisField input:focus{
+    box-shadow: none;
+}
+
+#loginField input:focus{
+    box-shadow: none;
+}
+
+#profileField input:focus{
+    box-shadow: none;
+}
