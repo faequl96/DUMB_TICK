@@ -62,16 +62,25 @@ const Upcoming = () => {
       }
    };
 
+   const eventsOtherMerchant = [];
+   for(let i = 0; i < events?.length; i++) {
+      if(events[i]?.merchant_id !== state?.user.id) {
+         eventsOtherMerchant.push(events[i]);
+      }
+   }
+
+   console.log(eventsOtherMerchant);
+
    return (
       <Container className='row m-auto pb-5 px-0 mb-4'>
          <h1 className='fw-bolder px-4 pb-4' style={{color: "#ff5555"}}>Upcoming Events</h1>
-         {events?.length === undefined ? (
+         {eventsOtherMerchant?.length === undefined ? (
             <div className='text-center'>
                <img src={noEvents} width="50%"/>
             </div>
          ) : (
             <>
-               {events?.map((item, index) => (
+               {eventsOtherMerchant?.map((item, index) => (
                   <div key={index} className='col-4 p-4'>
                      <Card 
                         className='position-relative border-0 py-0 bg-light rounded-0' 
@@ -83,7 +92,7 @@ const Upcoming = () => {
                               className='position-absolute px-2 py-1 bg-light text-center rounded-1 fw-semibold' 
                               style={{width: "110px", right: "8px", top: "8px", color: "#ff5555", boxShadow: "0 2px 4px rgba(0, 0, 0, .6)"}}
                            >
-                              Rp. {item.price.toString().slice(0, 3)}.000
+                              {contexts.formatRupiah(item.price)}
                            </div>
                         ) : (
                            <div 

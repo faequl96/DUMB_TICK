@@ -63,7 +63,7 @@ const DetailEvent = () => {
                   <div className='mx-4 my-3 pb-4' style={{borderBottom: "3px solid #9a9a9a"}}>
                      <div className='d-flex justify-content-between mt-4 mb-2'>
                         <h1 >{event?.title}</h1>
-                        <h5 className='fs-1 fw-bold' style={{color: "#ff5555"}}>Rp. {(event?.price * qty).toString().slice(0, 3)}.000</h5>
+                        <h5 className='fs-1 fw-bold' style={{color: "#ff5555"}}>{contexts.formatRupiah(event?.price * qty)}</h5>
                      </div>
                      <div className='d-flex justify-content-between align-items-center'>
                         <h5 className='fs-4 bg mb-0' style={{color: "#ff5555"}}>Music</h5>

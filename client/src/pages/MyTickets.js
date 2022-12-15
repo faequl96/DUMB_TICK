@@ -20,7 +20,7 @@ const MyTicket = () => {
 
    setInterval(() => {
       refetch()
-   }, 2000)
+   }, 3000)
 
    return (
       <>
@@ -47,7 +47,7 @@ const MyTicket = () => {
                         <Card.Body className='px-0 py-0'>
                            <div className='d-flex align-items-center px-4' style={{backgroundColor: "#bcbcbc"}}>
                               <p className='col-6 fw-semibold fs-4 mb-0' style={{color: "#454545"}}>Is Bos</p>
-                              <p className='col-6 text-end mb-0' style={{color: "#454545"}}>Face value Rp. {item.price}</p>
+                              <p className='col-6 text-end mb-0' style={{color: "#454545"}}>Face value {contexts.formatRupiah(item.price)}</p>
                            </div>
                            <div className='d-flex align-items-center px-4' style={{backgroundColor: "#bcbcbc"}}>
                               <p className='col-6 fs-5 mb-1 text-muted'>id.users</p>

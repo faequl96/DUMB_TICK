@@ -88,7 +88,7 @@ const Payment = () => {
                            <Card.Body className='px-0 py-0'>
                               <div className='d-flex align-items-center px-4' style={{backgroundColor: "#bcbcbc"}}>
                                  <p className='col-6 fw-semibold fs-4 mb-0' style={{color: "#454545"}}>{item.purchaser.name}</p>
-                                 <p className='col-6 text-end mb-0' style={{color: "#454545"}}>Face value Rp. {item.event.price.toString().slice(0, 3)}.000</p>
+                                 <p className='col-6 text-end mb-0' style={{color: "#454545"}}>Face value {contexts.formatRupiah(item.event.price)}</p>
                               </div>
                               <div className='d-flex align-items-center px-4' style={{backgroundColor: "#bcbcbc"}}>
                                  <p className='col-6 fs-5 mb-1 text-muted'>{item.purchaser.id}</p>

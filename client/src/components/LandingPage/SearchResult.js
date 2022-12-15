@@ -74,7 +74,7 @@ const SearchResult = ({searchData}) => {
                               className='position-absolute px-2 py-1 bg-light text-center rounded-1 fw-semibold' 
                               style={{width: "110px", right: "8px", top: "8px", color: "#ff5555", boxShadow: "0 2px 4px rgba(0, 0, 0, .6)"}}
                            >
-                              Rp. {item.price.toString().slice(0, 3)}.000
+                              {contexts.formatRupiah(item.price)}
                            </div>
                         ) : (
                            <div 

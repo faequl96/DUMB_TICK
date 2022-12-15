@@ -28,11 +28,11 @@ export const AppContextProvider = ({children}) => {
    // FORMAT CURRENCY ==================================================================================================================
    // ==================================================================================================================================
 
-   let formatCurrency = new Intl.NumberFormat(undefined, {
-      style: "currency",
-      currency: "IDR",
-      maximumFractionDigits: 0,
-   });
+   const formatRupiah = (money) => {
+      return new Intl.NumberFormat('id-ID',
+        { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }
+      ).format(money);
+   }
 
    // ==================================================================================================================================
    // //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -254,7 +254,7 @@ export const AppContextProvider = ({children}) => {
       // cartLength,
       // setCartLength,
 
-      formatCurrency,
+      formatRupiah,
       
       checkUserAuth,
       regisData,

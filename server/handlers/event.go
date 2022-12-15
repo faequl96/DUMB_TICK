@@ -279,6 +279,7 @@ func (h *handlerEvent) GetEventByCat(w http.ResponseWriter, r *http.Request) {
 			Email:       ev.Email,
 			Description: ev.Description,
 			Progress:    ev.Progress,
+			MerchantID:  ev.MerchantID,
 		}
 		data = append(data, dataGet)
 	}
@@ -394,6 +395,7 @@ func (h *handlerEvent) GetEventByUpcoming(w http.ResponseWriter, r *http.Request
 			Email:       ev.Email,
 			Description: ev.Description,
 			Progress:    ev.Progress,
+			MerchantID:  ev.MerchantID,
 		}
 
 		if fStart.Unix() >= tomorrow00_00.Unix() {
@@ -440,6 +442,7 @@ func (h *handlerEvent) SearchEvent(w http.ResponseWriter, r *http.Request) {
 			Email:       ev.Email,
 			Description: ev.Description,
 			Progress:    ev.Progress,
+			MerchantID:  ev.MerchantID,
 		}
 
 		dataEvents = append(dataEvents, dataGet)
