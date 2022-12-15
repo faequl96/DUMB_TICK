@@ -69,8 +69,6 @@ const Upcoming = () => {
       }
    }
 
-   console.log(eventsOtherMerchant);
-
    return (
       <Container className='row m-auto pb-5 px-0 mb-4'>
          <h1 className='fw-bolder px-4 pb-4' style={{color: "#ff5555"}}>Upcoming Events</h1>

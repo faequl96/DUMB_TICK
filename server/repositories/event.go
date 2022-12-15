@@ -53,8 +53,8 @@ func (r *repository) UpdateProgressEvent(event models.Event) {
 
 func (r *repository) GetEventByCat(category string) ([]models.Event, error) {
 	var event []models.Event
-	// err := r.db.Where("category = ? AND progress = ?", category, "Event will start").Find(&event).Error
-	err := r.db.Where("category = ? AND progress = ?", category, "Event will start").Or("category = ? AND progress = ?", category, "Event in progress").Find(&event).Error
+
+	err := r.db.Preload("Merchant").Where("category = ? AND progress = ?", category, "Event will start").Or("category = ? AND progress = ?", category, "Event in progress").Find(&event).Error
 
 	return event, err
 }
