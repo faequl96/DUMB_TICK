@@ -1,4 +1,4 @@
-import { Header } from "../components/LandingPage/Header";
+import { Search } from "../components/LandingPage/Search";
 import CategoryList from "../components/LandingPage/CategoryList";
 import Upcoming from "../components/LandingPage/UpcomingEvents";
 import Footer from "../components/Footer";
@@ -12,7 +12,7 @@ export const LandingPage = () => {
 
    return (
       <>
-         <Header
+         <Search
             searchResult={searchResult}
             setSearchResult={setSearchResult}
          />

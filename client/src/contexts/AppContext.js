@@ -22,6 +22,8 @@ export const AppContextProvider = ({children}) => {
    const [showLogin, setShowLogin] = useState(false);
    const [showRegister, setShowRegister] = useState(false);
    const [profilePhoto, setProfilePhoto] = useState();
+   const [navbarLoading, setNavbarLoading] = useState(true);
+   const [isLoading, setIsLoading] = useState(false);
    // const [cartLength, setCartLength] = useState();
 
    // ==================================================================================================================================
@@ -51,6 +53,7 @@ export const AppContextProvider = ({children}) => {
          const token = JSON.parse(localStorage.token)
          setAuthToken(token.value);
          const response = await API.get("/check-auth");
+         setNavbarLoading(false);
          const payload = response.data.data;
   
          payload.token = token.value;
@@ -60,8 +63,8 @@ export const AppContextProvider = ({children}) => {
             payload,
          });
 
-         setProfilePhoto(payload.image)
-         setIsLogin(true)
+         setProfilePhoto(payload.image);
+         setIsLogin(true);
       } catch (error) {
         console.log(error);
       }
@@ -88,10 +91,13 @@ export const AppContextProvider = ({children}) => {
 		try {
 			e.preventDefault();
 
+         setIsLoading(true)
+
 			const config = {headers: {"Content-type": "application/json"}}
 			const body = JSON.stringify(regisData);
 			await API.post('/register', body, config);
 
+         setIsLoading(false)
 			setShowRegister(false);
 			setShowLogin(true);
 			setRegisMessage('');
@@ -122,12 +128,15 @@ export const AppContextProvider = ({children}) => {
       try {
          e.preventDefault();
 
+         setIsLoading(true)
+
          const config = {headers: {"Content-type": "application/json"}}
          const body = JSON.stringify(loginData);
          const response = await API.post("/login", body, config);
          
          dispatch({type: "LOGIN_SUCCESS", payload: response.data.data});
 
+         setIsLoading(false)
          setProfilePhoto(response.data.data.image)
          setIsLogin(true);
          setShowLogin(false);
@@ -239,6 +248,10 @@ export const AppContextProvider = ({children}) => {
    const appContextsValue = {
       isLogin,
       setIsLogin,
+      isLoading,
+      navbarLoading,
+      setNavbarLoading,
+
       loginMessage,
       setLoginMessage,
       regisMessage,

@@ -3,7 +3,7 @@ package models
 type User struct {
 	ID         int     `json:"id" gorm:"primary_key:auto_increment"`
 	Name       string  `json:"name" gorm:"type: varchar(155)"`
-	Email      string  `json:"email" gorm:"type: varchar(125)"`
+	Email      string  `json:"email" gorm:"type: varchar(125);unique"`
 	Username   string  `json:"username" gorm:"type: varchar(55)"`
 	Password   string  `json:"password" gorm:"type: varchar(255)"`
 	Birthday   string  `json:"birthday" gorm:"type: varchar(125)"`

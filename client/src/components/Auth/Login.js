@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Button, Form, Modal, Spinner } from 'react-bootstrap';
 import { AppContext } from '../../contexts/AppContext';
 
 function Login() {
@@ -34,7 +34,16 @@ function Login() {
                   />
                </Form.Group>
                <Form.Group className="mb-4 mt-5">
-                  <Button variant='' className="w-100 fs-4 fw-bold text-white pt-1" style={{backgroundColor: "#ff5555"}} type='submit'>Login</Button>
+                  {contexts.isLoading ? (
+                     <Button variant='' className="w-100 d-flex align-items-center justify-content-center" style={{backgroundColor: "#ff5555"}} type='submit'>
+                        <span className="fs-4 fw-bold text-white me-3">Login</span>
+                        <Spinner animation="border" style={{color: "#fff"}}/>
+                     </Button>
+                  ) : (
+                     <Button variant='' className="w-100 d-flex align-items-center justify-content-center" style={{backgroundColor: "#ff5555"}} type='submit'>
+                        <span className="fs-4 fw-bold text-white me-3">Login</span>
+                     </Button>
+                  )}
                </Form.Group>
                
             </Form>

@@ -28,7 +28,7 @@ function App() {
    useEffect(() => {
       if (localStorage.token) {
          contexts.checkUserAuth()
-      }
+      } else {contexts.setNavbarLoading(false)}
    }, []);
 
    return (

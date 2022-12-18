@@ -56,7 +56,7 @@ const SearchResult = ({searchData}) => {
 
    return (
       <Container className='row m-auto pb-5 px-0 mb-4'>
-         {searchData?.length === undefined ? (
+         {searchData?.length === 0 ? (
             <div className='text-center'>
                <img src={noEvents} width="50%"/>
             </div>

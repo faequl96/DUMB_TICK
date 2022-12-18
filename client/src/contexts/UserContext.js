@@ -12,6 +12,12 @@ const reducer = (state, action) => {
 
    switch(type) {
       case 'USER_SUCCESS':
+         const tokenAuth = JSON.parse(localStorage.token)
+         setAuthToken(tokenAuth.value);
+         
+         return{
+            user: payload
+         }
       case "LOGIN_SUCCESS":
          const item = {
             value: payload.token,

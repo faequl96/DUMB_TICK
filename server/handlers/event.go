@@ -338,7 +338,7 @@ func (h *handlerEvent) GetEventByToday(w http.ResponseWriter, r *http.Request) {
 			MerchantID:  ev.MerchantID,
 		}
 
-		if (timeNowLocalClient.Unix() <= fEnd.Unix()) && (fStart.Unix() <= tomorrow00_00.Unix()) {
+		if (timeNowLocalClient.Unix() <= fEnd.Unix()) && (fStart.Unix() < tomorrow00_00.Unix()) {
 			dataEvents = append(dataEvents, dataGet)
 		}
 	}

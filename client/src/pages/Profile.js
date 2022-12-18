@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import {Button, Container, Form} from 'react-bootstrap';
+import {Button, Container, Form, Spinner} from 'react-bootstrap';
 import profileIcon from '../assets/profileIcon.png';
 import editProfile from '../assets/edit.png';
 import { AppContext } from '../contexts/AppContext';
@@ -13,14 +13,14 @@ function Profile() {
    const [state,] = useContext(UserContext);
    const [isEdit, setIsEdit] = useState(false);
 
-   // useEffect(() => {contexts.checkUserAuth()}, []);
+   const [isLoading, setIsLoading] = useState(false);
 
    let { data: user, refetch } = useQuery("userCache", async () => {
+      setIsLoading(true);
       const response = await API.get(`/user/${state.user.id}`);
+      setIsLoading(false);
       return response.data.data;
    });
-
-   // useEffect(() => refetch(), [isEdit]);
 
    const [preview, setPreview] = useState();
    const [editData, setEditData] = useState({
@@ -70,6 +70,19 @@ function Profile() {
 
    return (
       <>
+         {isLoading ? (
+            <Container style={{marginTop: "180px", padding: "0 20px 0px"}}>
+               <div className='d-flex pb-5'>
+                  <div className='col-5 d-flex align-items-center'>
+                     <h1 className='fw-bolder me-4' style={{color: "#ff5555"}}>Profile</h1>
+                     <Spinner animation="border" style={{color: "#ff5555"}}/>
+                  </div>
+                  <div className='col-2'></div>
+                  <div className='col-5 d-flex justify-content-center' style={{margin: "20px 100px"}}></div>
+               </div>
+            </Container>
+         ) : (
+            <>
          {!isEdit ? (
             <Container style={{marginTop: "180px", padding: "0 20px 0px"}}>
                <div className='d-flex pb-5'>
@@ -166,6 +179,8 @@ function Profile() {
                   </div>
                </div>
             </Container>
+         )}
+            </>
          )}
 
          <Favorite/>

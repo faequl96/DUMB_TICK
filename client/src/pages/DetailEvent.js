@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Card, Container } from 'react-bootstrap';
+import { Card, Container, Spinner } from 'react-bootstrap';
 import { useNavigate, useParams } from "react-router-dom"
 import { AppContext } from '../contexts/AppContext';
 import { UserContext } from '../contexts/UserContext';
@@ -31,9 +31,13 @@ const DetailEvent = () => {
       return response.data.data;
    });
 
-   const handlerBuy = useMutation(async (e) => {
+   const [isLoading, setIsLoading] = useState(false);
+   const [paymentSuccess, setPaymentSuccess] = useState(false);
+
+   const handlerAddPayment = useMutation(async (e) => {
       try {
          e.preventDefault();
+         setIsLoading(true);
   
          const config = {headers: {"Content-type": "application/json"}};
          const body = JSON.stringify({
@@ -42,8 +46,13 @@ const DetailEvent = () => {
             price: event.price * qty
          });
 
-         console.log("tes");
          await API.post("/add-payment", body, config);
+
+         setIsLoading(false);
+         setPaymentSuccess(true);
+         setTimeout(() => {
+            setPaymentSuccess(false);
+         }, 1000);
    
          setQty(1)
 
@@ -78,9 +87,30 @@ const DetailEvent = () => {
                                     <img onClick={() => setQty(qty+1)} src={addIcon} width="34px" style={{cursor: "pointer"}}/>
                                  </div>
                                  {contexts.isLogin === true ? (
-                                    <img onClick={(e) => handlerBuy.mutate(e)} src={buyIcon} height="34px" style={{cursor: "pointer"}}/>
+                                    <>
+                                       {isLoading ? (
+                                          <div className='d-flex align-items-center justify-content-center py-0 px-3 rounded-2' style={{backgroundColor: "#ff5555"}}>
+                                             <span className="fs-4 fw-bold text-white pb-1">Add to payment</span>
+                                             <Spinner animation="border" className="ms-3" style={{color: "#fff"}}/>
+                                          </div>
+                                       ) : (
+                                          <>
+                                             {paymentSuccess ? (
+                                                <div className='d-flex align-items-center justify-content-center py-0 px-3 rounded-2 bg-success'>
+                                                   <span className="fs-4 fw-bold text-white pb-1">Success to add</span>
+                                                </div>
+                                             ) : (
+                                                <div className='d-flex align-items-center justify-content-center py-0 px-3 rounded-2' style={{backgroundColor: "#ff5555", cursor: "pointer"}}>
+                                                   <span onClick={(e) => handlerAddPayment.mutate(e)} className="fs-4 fw-bold text-white pb-1">Add to payment</span>
+                                                </div>
+                                             )}
+                                          </>
+                                       )}
+                                    </>
                                  ) : (
-                                    <img onClick={() => contexts.setShowLogin(true)} src={buyIcon} height="34px" style={{cursor: "pointer"}}/>
+                                    <div className='d-flex align-items-center justify-content-center py-0 px-3 rounded-2' style={{backgroundColor: "#ff5555", cursor: "pointer"}}>
+                                       <span onClick={() => contexts.setShowLogin(true)} className="fs-4 fw-bold text-white pb-1">Add to payment</span>
+                                    </div>
                                  )}
                               </>
                            )}
