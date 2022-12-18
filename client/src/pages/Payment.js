@@ -47,7 +47,7 @@ const Payment = () => {
 
    useEffect(() => {
       const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
-      const myMidtransClientKey = "SB-Mid-client-oHRMncHcXqOdGAwt";
+      const myMidtransClientKey = process.env.REACT_APP_MIDTRANS_CLIENT_KEY;
 
       let scriptTag = document.createElement("script");
       scriptTag.src = midtransScriptUrl;
