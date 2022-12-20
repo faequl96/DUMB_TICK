@@ -20,7 +20,7 @@ function Profile() {
       const response = await API.get(`/user/${state.user.id}`);
       setIsLoading(false);
       return response.data.data;
-   });
+   }, { refetchOnWindowFocus: false });
 
    const [preview, setPreview] = useState();
    const [editData, setEditData] = useState({
@@ -70,7 +70,7 @@ function Profile() {
 
    return (
       <>
-         {/* {isLoading ? (
+         {isLoading ? (
             <Container style={{marginTop: "180px", padding: "0 20px 0px"}}>
                <div className='d-flex pb-5'>
                   <div className='col-5 d-flex align-items-center'>
@@ -82,7 +82,7 @@ function Profile() {
                </div>
             </Container>
          ) : (
-            <> */}
+            <>
          {!isEdit ? (
             <Container style={{marginTop: "180px", padding: "0 20px 0px"}}>
                <div className='d-flex pb-5'>
@@ -180,8 +180,8 @@ function Profile() {
                </div>
             </Container>
          )}
-            {/* </>
-         )} */}
+            </>
+         )}
 
          <Favorite/>
       </>
