@@ -62,13 +62,13 @@ const Favorite = () => {
 
    return (
       <Container className='row mx-auto pb-5 px-0 mb-4' style={{marginTop: "60px"}}>
-         {isLoading ? (
+         {/* {isLoading ? (
             <div className='d-flex ps-0 align-items-center'>
                <h1 className='fw-bolder px-4' style={{color: "#ff5555"}}>Favorite</h1>
                <Spinner animation="border" style={{color: "#ff5555"}}/>
             </div>
          ) : (
-            <>
+            <> */}
                <h1 className='fw-bolder px-4 pb-4' style={{color: "#ff5555"}}>Favorite</h1>
                {favorite?.length === 0 ? (
                   <div className='text-center'>
@@ -174,8 +174,8 @@ const Favorite = () => {
                      ))}
                   </>
                )}
-            </>
-         )}
+            {/* </>
+         )} */}
       </Container>
    );
 }
