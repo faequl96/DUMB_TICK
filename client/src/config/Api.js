@@ -3,7 +3,7 @@ import axios from "axios";
 // "https://dumbtick.up.railway.app/api/v1"
 // process.env.REACT_APP_BASEURL
 export const API = axios.create({
-   baseURL: "https://dumbtick.up.railway.app/api/v1",
+   baseURL: process.env.REACT_APP_BASEURL,
 });
 
 export const setAuthToken = (token) => {
